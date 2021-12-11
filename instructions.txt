@@ -1,0 +1,71 @@
+logic
+-----
+
+https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/v1/video-secured-attachments/message/attachments/af1be1428877626529e27ed5cbdbdaed-1636115251612/Screen%20Recording%202021-11-04%20at%2011.51.30%20AM?__cld_token__=exp=1637599928~hmac=8d994457bf72b645067d99fd4ce4df866c32580e74b856332bda942fa2e4f721
+
+guide
+-----
+https://algotrading101.com/learn/binance-python-api-guide/
+
+github account + gmail
+----------------------
+bot2026bot@gmail.com
+bot2026bot1232014
+
+
+
+binance account
+---------------
++94 713058912
+BotTest001
+
+
+api key phrase -> futures
+api_key -> wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7
+secret -> 4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj
+
+
+############################################################################################# older below / no use
+
+
+
+
+
+testnet key generating code ->
+bot2026
+
+HMAC_SHA256 Key registered
+Save these values right now. They won't be shown ever again!
+API Key: lOv30INBI7HAxpgpXu3RJlj9IXnN8UGjC3iX82Dikd9FdwTzlV6pO0qs0oumzP1Y
+Secret Key: dyJihyCDnyNYkKDjDlrA6A6xyi96ee9PHLkzLdQfXdWN39BePU9lCbz8yD6m5HPm
+
+
+binance test account
+--------------------
+701094061
+BotTest001
+
+aws account
+-----------
+email:
+trendyposter.com@gmail.com
+name:
+explore2020
+pw:
+k&mnX&5dDHMk~7U
+
+
+
+message format
+--------------
+coin: here will be the name of the coin
+buying: 1.91025178 - 2.1956917
+T1: 2.60005423
+stoploss: here will be the stop loss value
+
+example->
+
+coin: DAR
+buying: 1.91025178 - 2.1956917
+T1: 2.60005423
+stoploss: 1.3
