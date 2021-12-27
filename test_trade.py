@@ -19,9 +19,28 @@ client = Client(api_key, api_secret)
 
 # print(client.futures_coin_create_order("BTCUSDT"))
 
+print(client.futures_get_open_orders())
+
+## working fine
 print(client.futures_change_leverage(symbol="BTCUSDT", leverage=5))
-print(client.futures_change_leverage(symbol="BTCUSDT", leverage=2))
-print(client.futures_create_order(symbol="BTCUSDT", side='BUY', type='MARKET', quantity=15))
+print(client.futures_change_leverage(symbol="BTCUSDT", leverage=20))
+print(client.futures_create_order(symbol="BTCUSDT", side='BUY', type='MARKET', quantity=0.001))
+
+
+print(client.futures_get_open_orders())
+# print(client.futures_account_balance())
+
+
+
+# print(client.futures_coin_get_open_orders())
+
+# print(client.futures_coin_get_all_orders(symbol="BTCUSDT"))
+
+# print(client.futures_cancel_orders(symbol="BTCUSDT"))
+
+
+
+
 
 
 # client.API_URL = 'https://testnet.binance.vision/api'
@@ -37,7 +56,11 @@ print(client.futures_create_order(symbol="BTCUSDT", side='BUY', type='MARKET', q
 
 # get balances for futures account
 # print("-----")
+
+
 # print(client.futures_get_open_orders())
 # print(client.futures_account_balance())
+
+
 # print(client.futures_get_all_orders())
 # print(client.futures_coin_create_order())
