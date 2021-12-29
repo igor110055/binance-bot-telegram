@@ -1,7 +1,27 @@
+telegram_bot
+------------
+
+auto_bot_jonam_2022_percentage
+jonam_percentage_bot
+
+Done! Congratulations on your new bot. You will find it at t.me/jonam_percentage_bot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
+
+Use this token to access the HTTP API:
+5047585678:AAFkIdh39y4Sya8IylYExlEfzLM2WChj1sg
+Keep your token secure and store it safely, it can be used by anyone to control your bot.
+
+For a description of the Bot API, see this page: https://core.telegram.org/bots/api
+
+
 logic
 -----
 
 https://fiverr-res.cloudinary.com/video/upload/t_fiverr_hd/v1/video-secured-attachments/message/attachments/af1be1428877626529e27ed5cbdbdaed-1636115251612/Screen%20Recording%202021-11-04%20at%2011.51.30%20AM?__cld_token__=exp=1637599928~hmac=8d994457bf72b645067d99fd4ce4df866c32580e74b856332bda942fa2e4f721
+
+
+take profit -> target 1
+stop loss -> stop loss
+
 
 guide
 -----

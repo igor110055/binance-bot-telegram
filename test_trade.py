@@ -41,11 +41,29 @@ for asset in client.futures_account()["assets"]:
 
 print("usdt_balance: "+usdt_balance)
 
-# print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT',price=cheapest_price+1, quantity=30))
-print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='MARKET', quantity=30))
 
+# timeInForce -> immediate-or-cancel (IOC), fill-or-kill (FOK), or good-'til-canceled (GTC).
+# print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT',price=round(cheapest_price, 5), timeInForce="GTC", quantity=30))
+
+# print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='MARKET', quantity=30))
+
+#to cancel after reach target 1
+# print(client.futures_cancel_all_open_orders(symbol=SYMBOL))
 
 # print(client.futures_get_open_orders())
+# print(client.futures_get_all_orders(symbol=SYMBOL))
+
+
+# take profit market
+# print(client.futures_create_order(symbol=SYMBOL, side='SELL', type='TAKE_PROFIT_MARKET',stopPrice=1.0, closePosition=True))
+# stop market
+# print(client.futures_create_order(symbol=SYMBOL, side='SELL', type='STOP_MARKET',stopPrice=0.5, closePosition=True))
+
+
+
+
+
+# print(client.futures_position_information(symbol=SYMBOL))
 # print(client.futures_get_order(symbol='BTCUSDT'))
 # print(client.futures_get_all_orders())
 # print(client.futures_account())
