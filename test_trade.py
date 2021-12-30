@@ -41,6 +41,23 @@ for asset in client.futures_account()["assets"]:
 
 print("usdt_balance: "+usdt_balance)
 
+# print(client.futures_ticker(symbol=SYMBOL))
+# print(client.get_ticker(symbol=SYMBOL))
+info = client.futures_exchange_info()
+# print(info)
+for symbol in info["symbols"]:
+    if(symbol["symbol"]==SYMBOL):
+        print(symbol)
+
+# print(client.get_exchange_info(symbol=SYMBOL))
+
+
+
+
+
+# print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT',price=0.82877, timeInForce="GTC", quantity=28.1))
+
+
 
 # timeInForce -> immediate-or-cancel (IOC), fill-or-kill (FOK), or good-'til-canceled (GTC).
 # print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT',price=round(cheapest_price, 5), timeInForce="GTC", quantity=30))
