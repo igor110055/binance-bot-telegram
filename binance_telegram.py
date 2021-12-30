@@ -42,12 +42,16 @@ def test(message):
 
 @bot.message_handler(commands=["balance"])
 def balance(message):
-    for asset in client.futures_account()["assets"]:
-        if (asset["asset"] == "USDT"):
-            usdt_balance = float(asset["availableBalance"])
+    try:
+        for asset in client.futures_account()["assets"]:
+            if (asset["asset"] == "USDT"):
+                usdt_balance = float(asset["availableBalance"])
 
-    print("usdt_balance: " + str(usdt_balance))
-    bot.reply_to(message, "usdt_balance: " + str(usdt_balance))
+        print("usdt_balance: " + str(usdt_balance))
+        bot.reply_to(message, "usdt_balance: " + str(usdt_balance))
+    except Exception as e:
+        print("error in balance -> " + str(e))
+        bot.reply_to(message, "error in balance -> " + str(e))
 
 
 # @bot.message_handler(commands=["start-bot"])
@@ -156,8 +160,10 @@ def handle_message(message):
                 try:
                     print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT', price=order_amount, timeInForce="GTC", quantity=QUANTITY))
                     placed_orders +=1
-                except:
-                    pass
+                except Exception as e:
+                    error_msg = "Error placing order. order_amount: "+str(order_amount)+" , quantity: "+str(QUANTITY)+" -> "+str(e)
+                    print(error_msg)
+                    bot.reply_to(message, error_msg)
 
         # target checking thread
         t = Thread(target=check_for_target, args=([SYMBOL,msg_target,msg_stoploss,message],), )
