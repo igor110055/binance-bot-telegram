@@ -29,7 +29,7 @@ client = Client(api_key, api_secret)
 
 
 
-# print(client.futures_change_leverage(symbol=SYMBOL, leverage=LEVERAGE))
+print(client.futures_mark_price(symbol=SYMBOL))
 
 cheapest_price = float(client.futures_mark_price(symbol=SYMBOL)["markPrice"])
 print("cheapest_price: "+str(cheapest_price))
@@ -38,16 +38,19 @@ usdt_balance = 0
 for asset in client.futures_account()["assets"]:
     if(asset["asset"]=="USDT"):
         usdt_balance = asset["availableBalance"]
-
 print("usdt_balance: "+usdt_balance)
+
+print(client.futures_account_balance())
 
 # print(client.futures_ticker(symbol=SYMBOL))
 # print(client.get_ticker(symbol=SYMBOL))
-info = client.futures_exchange_info()
-# print(info)
-for symbol in info["symbols"]:
-    if(symbol["symbol"]==SYMBOL):
-        print(symbol)
+
+# info = client.futures_exchange_info()
+# # print(info)
+# for symbol in info["symbols"]:
+#     if(symbol["symbol"]==SYMBOL):
+#         print(symbol)
+
 
 # print(client.get_exchange_info(symbol=SYMBOL))
 
@@ -68,6 +71,7 @@ for symbol in info["symbols"]:
 # print(client.futures_cancel_all_open_orders(symbol=SYMBOL))
 
 # print(client.futures_get_open_orders())
+
 # print(client.futures_get_all_orders(symbol=SYMBOL))
 
 
@@ -77,14 +81,13 @@ for symbol in info["symbols"]:
 # print(client.futures_create_order(symbol=SYMBOL, side='SELL', type='STOP_MARKET',stopPrice=0.5, closePosition=True))
 
 
+# print(client.futures_position_information(symbol="MATICUSDT"))
 
 
-
-# print(client.futures_position_information(symbol=SYMBOL))
 # print(client.futures_get_order(symbol='BTCUSDT'))
 # print(client.futures_get_all_orders())
 # print(client.futures_account())
-# print(client.futures_cancel_orders(symbol="BTCUSDT"))
+# print(client.futures_cancel_orders(symbol="OCEANUSDT"))
 # print(client.futures_coin_account_balance())
 # print(client.futures_coin_get_all_orders())
 # print(client.futures_account_balance())

@@ -10,7 +10,6 @@ telegram_api_key = "5047585678:AAFkIdh39y4Sya8IylYExlEfzLM2WChj1sg"
 client = Client(binance_api_key, binance_api_secret)
 
 bot =telebot.TeleBot(telegram_api_key)
-message_chat_id = ""
 PERCENTAGE = 50
 LEVERAGE = 10
 
@@ -23,21 +22,40 @@ def check_for_target(thread_data):
         price_now = float(client.futures_mark_price(symbol=symb)["markPrice"])
         print("price_now for "+symb+": " + str(price_now))
         if(price_now>target):
-            bot.reply_to(msg, "target achieved")
-            print("target achieved for "+symb)
-            print(client.futures_cancel_all_open_orders(symbol=symb))
-            print(client.futures_create_order(symbol=symb, side='SELL', type='TAKE_PROFIT_MARKET',stopPrice=target, closePosition=True))
-            print(client.futures_create_order(symbol=symb, side='SELL', type='STOP_MARKET',stopPrice=stoploss, closePosition=True))
+            bot.reply_to(msg, "price reached target 1")
+            print("price reached target 1 for "+symb)
+            try:
+                print(client.futures_cancel_all_open_orders(symbol=symb))
+            except Exception as e:
+                error_msg = "issue in cancel all orders after reaching target 1 -> " + str(e)
+                print(error_msg)
+                bot.reply_to(msg, error_msg)
             break
+        #     try:
+        #         print(client.futures_create_order(symbol=symb, side='SELL', type='TAKE_PROFIT_MARKET',stopPrice=target, closePosition=True))
+        #     except Exception as e:
+        #         error_msg = "issue in creating order for take profit, after reaching target 1 -> " + str(e)
+        #         print(error_msg)
+        #         bot.reply_to(msg, error_msg)
+        #     break
+        # elif(price_now<stoploss):
+        #     bot.reply_to(msg, "target achieved")
+        #     print("target achieved for " + symb)
+        #     try:
+        #         print(client.futures_create_order(symbol=symb, side='SELL', type='STOP_MARKET',stopPrice=stoploss, closePosition=True))
+        #     except Exception as e:
+        #         error_msg = "issue in creating order for stoploss, after reaching stoploss price -> " + str(e)
+        #         print(error_msg)
+        #         bot.reply_to(msg, error_msg)
+        #     break
         else:
-            print("target not achieved yet")
+            print("target/stoploss not achieved yet")
         time.sleep(5)
     print("thread completed for: "+symb)
 
 @bot.message_handler(commands=["test"])
 def test(message):
     print("testing ..")
-    print(message_chat_id)
     bot.reply_to(message, "bot working fine !")\
 
 @bot.message_handler(commands=["balance"])
@@ -149,8 +167,18 @@ def handle_message(message):
         QUANTITY = round((usdt_balance*(PERCENTAGE/100))/cheapest_price,quantity_precision)
         print("buying QUANTITY for this coin: " + str(QUANTITY))
 
+
+        # changing laverage
+        try:
+            print(client.futures_change_leverage(symbol=SYMBOL, leverage=LEVERAGE))
+        except Exception as e:
+            error_msg = "Error changing the leverage"
+            print(error_msg)
+            bot.reply_to(message, error_msg)
+            return
+
         # creating 8 orders
-        reduce_val = (cheapest_price-msg_entry_min)/msg_entry_max
+        reduce_val = (cheapest_price-msg_entry_min)/8
 
         placed_orders = 0
         for i in range(0,8):
@@ -164,6 +192,22 @@ def handle_message(message):
                     error_msg = "Error placing order. order_amount: "+str(order_amount)+" , quantity: "+str(QUANTITY)+" -> "+str(e)
                     print(error_msg)
                     bot.reply_to(message, error_msg)
+
+        # creating take profit order
+        try:
+            print(client.futures_create_order(symbol=SYMBOL, side='SELL', type='TAKE_PROFIT_MARKET', stopPrice=msg_target, closePosition=True))
+        except Exception as e:
+            error_msg = "issue in creating order for take profit -> " + str(e)
+            print(error_msg)
+            bot.reply_to(msg, error_msg)
+
+        # creating order for stoploss
+        try:
+            print(client.futures_create_order(symbol=SYMBOL, side='SELL', type='STOP_MARKET', stopPrice=msg_stoploss,closePosition=True))
+        except Exception as e:
+            error_msg = "issue in creating order for stoploss -> " + str(e)
+            print(error_msg)
+            bot.reply_to(msg, error_msg)
 
         # target checking thread
         t = Thread(target=check_for_target, args=([SYMBOL,msg_target,msg_stoploss,message],), )
