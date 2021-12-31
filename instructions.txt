@@ -47,7 +47,7 @@ secret -> 4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj
 pip install python-binance
 
 
-aws account
+aws account -> root account
 -----------
 email:
 trendyposter.com@gmail.com
