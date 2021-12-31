@@ -206,7 +206,7 @@ def handle_message(message):
         except Exception as e:
             error_msg = "issue in creating order for take profit -> " + str(e)
             print(error_msg)
-            bot.reply_to(msg, error_msg)
+            bot.reply_to(message, error_msg)
 
         # creating order for stoploss
         try:
@@ -214,7 +214,7 @@ def handle_message(message):
         except Exception as e:
             error_msg = "issue in creating order for stoploss -> " + str(e)
             print(error_msg)
-            bot.reply_to(msg, error_msg)
+            bot.reply_to(message, error_msg)
 
         # target checking thread
         t = Thread(target=check_for_target, args=([SYMBOL,msg_target,msg_stoploss,message],), )
