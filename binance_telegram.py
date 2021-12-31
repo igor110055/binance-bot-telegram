@@ -14,44 +14,51 @@ PERCENTAGE = 50
 LEVERAGE = 10
 
 def check_for_target(thread_data):
-    symb = thread_data[0]
-    target = thread_data[1]
-    stoploss = thread_data[2]
-    msg = thread_data[3]
-    while(True):
-        price_now = float(client.futures_mark_price(symbol=symb)["markPrice"])
-        print("price_now for "+symb+": " + str(price_now))
-        if(price_now>target):
-            bot.reply_to(msg, "price reached target 1")
-            print("price reached target 1 for "+symb)
-            try:
-                print(client.futures_cancel_all_open_orders(symbol=symb))
-            except Exception as e:
-                error_msg = "issue in cancel all orders after reaching target 1 -> " + str(e)
-                print(error_msg)
-                bot.reply_to(msg, error_msg)
-            break
-        #     try:
-        #         print(client.futures_create_order(symbol=symb, side='SELL', type='TAKE_PROFIT_MARKET',stopPrice=target, closePosition=True))
-        #     except Exception as e:
-        #         error_msg = "issue in creating order for take profit, after reaching target 1 -> " + str(e)
-        #         print(error_msg)
-        #         bot.reply_to(msg, error_msg)
-        #     break
-        # elif(price_now<stoploss):
-        #     bot.reply_to(msg, "target achieved")
-        #     print("target achieved for " + symb)
-        #     try:
-        #         print(client.futures_create_order(symbol=symb, side='SELL', type='STOP_MARKET',stopPrice=stoploss, closePosition=True))
-        #     except Exception as e:
-        #         error_msg = "issue in creating order for stoploss, after reaching stoploss price -> " + str(e)
-        #         print(error_msg)
-        #         bot.reply_to(msg, error_msg)
-        #     break
-        else:
-            print("target/stoploss not achieved yet")
-        time.sleep(5)
-    print("thread completed for: "+symb)
+    try:
+        symb = thread_data[0]
+        target = thread_data[1]
+        stoploss = thread_data[2]
+        msg = thread_data[3]
+        while(True):
+            price_now = float(client.futures_mark_price(symbol=symb)["markPrice"])
+            print("price_now for "+symb+": " + str(price_now))
+            if(price_now>target):
+                bot.reply_to(msg, "price reached target 1")
+                print("price reached target 1 for "+symb)
+                try:
+                    print(client.futures_cancel_all_open_orders(symbol=symb))
+                except Exception as e:
+                    error_msg = "issue in cancel all orders after reaching target 1 -> " + str(e)
+                    print(error_msg)
+                    bot.reply_to(msg, error_msg)
+                break
+            #     try:
+            #         print(client.futures_create_order(symbol=symb, side='SELL', type='TAKE_PROFIT_MARKET',stopPrice=target, closePosition=True))
+            #     except Exception as e:
+            #         error_msg = "issue in creating order for take profit, after reaching target 1 -> " + str(e)
+            #         print(error_msg)
+            #         bot.reply_to(msg, error_msg)
+            #     break
+            # elif(price_now<stoploss):
+            #     bot.reply_to(msg, "target achieved")
+            #     print("target achieved for " + symb)
+            #     try:
+            #         print(client.futures_create_order(symbol=symb, side='SELL', type='STOP_MARKET',stopPrice=stoploss, closePosition=True))
+            #     except Exception as e:
+            #         error_msg = "issue in creating order for stoploss, after reaching stoploss price -> " + str(e)
+            #         print(error_msg)
+            #         bot.reply_to(msg, error_msg)
+            #     break
+            if (price_now < stoploss):
+                break
+            else:
+                print("target/stoploss not achieved yet")
+            time.sleep(5)
+        print("thread completed for: "+symb)
+    except Exception as e:
+        error_msg = "issue in thread for "+symb +" -> " + str(e)
+        print(error_msg)
+        bot.reply_to(msg, error_msg)
 
 @bot.message_handler(commands=["test"])
 def test(message):
@@ -70,7 +77,6 @@ def balance(message):
     except Exception as e:
         print("error in balance -> " + str(e))
         bot.reply_to(message, "error in balance -> " + str(e))
-
 
 # @bot.message_handler(commands=["start-bot"])
 # def start_check(message):
@@ -183,15 +189,16 @@ def handle_message(message):
         placed_orders = 0
         for i in range(0,8):
             order_amount = round(cheapest_price - i*reduce_val,price_precision)
-            print(order_amount)
-            if(order_amount>0):
-                try:
-                    print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT', price=order_amount, timeInForce="GTC", quantity=QUANTITY))
-                    placed_orders +=1
-                except Exception as e:
-                    error_msg = "Error placing order. order_amount: "+str(order_amount)+" , quantity: "+str(QUANTITY)+" -> "+str(e)
-                    print(error_msg)
-                    bot.reply_to(message, error_msg)
+            try:
+                print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT', price=order_amount, timeInForce="GTC", quantity=QUANTITY))
+                placed_orders +=1
+            except Exception as e:
+                error_msg = "Error placing order. order_amount: "+str(order_amount)+" , quantity: "+str(QUANTITY)+" -> "+str(e)
+                print(error_msg)
+                bot.reply_to(message, error_msg)
+
+        print(str(placed_orders) + " orders placed successfully")
+        bot.reply_to(message, str(placed_orders) + " orders placed successfully")
 
         # creating take profit order
         try:
@@ -212,9 +219,6 @@ def handle_message(message):
         # target checking thread
         t = Thread(target=check_for_target, args=([SYMBOL,msg_target,msg_stoploss,message],), )
         t.start()
-
-        print(str(placed_orders) + " orders placed successfully")
-        bot.reply_to(message, str(placed_orders) + " orders placed successfully")
 
     except Exception as e:
         print("Issue in order placement -> " + str(e))
