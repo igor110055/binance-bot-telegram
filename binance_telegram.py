@@ -116,18 +116,18 @@ def handle_message(message):
             value = row.split(":")[1].strip()
             msg_content.append([key,value])
         msg_coin = ""
-        if(msg_content[0][0]=="coin"):
+        if(msg_content[0][0].lower() =="coin"):
             msg_coin=msg_content[0][1]
         msg_entry_min = ""
         msg_entry_max = ""
-        if (msg_content[1][0] == "buying"):
+        if (msg_content[1][0].lower() == "buying"):
             msg_entry_min = min(float(msg_content[1][1].split("-")[0].strip()), float(msg_content[1][1].split("-")[1].strip()))
             msg_entry_max = max(float(msg_content[1][1].split("-")[0].strip()), float(msg_content[1][1].split("-")[1].strip()))
         msg_target = ""
-        if (msg_content[2][0] == "T1"):
+        if (msg_content[2][0].lower() == "t1"):
             msg_target = float(msg_content[2][1])
         msg_stoploss = ""
-        if (msg_content[3][0] == "stoploss"):
+        if (msg_content[3][0].lower() == "stoploss"):
             msg_stoploss = float(msg_content[3][1])
 
         print("Data get from the message ->")
@@ -165,10 +165,16 @@ def handle_message(message):
         info = client.futures_exchange_info()
         for symbol in info["symbols"]:
             if (symbol["symbol"] == SYMBOL):
-                price_precision = int(symbol["pricePrecision"])
                 quantity_precision = int(symbol["quantityPrecision"])
-                print("price_precision: "+str(price_precision))
-                print("quantity_precision: "+str(quantity_precision))
+                print("quantity_precision: " + str(quantity_precision))
+                price_precision = int(symbol["pricePrecision"])
+                print("price_precision: " + str(price_precision))
+                print(symbol["filters"][0])
+                tick_size = float(symbol["filters"][0]["tickSize"])
+                tick_size = f"{tick_size:.10f}"
+                print("tick_size: " + str(tick_size))
+                rounding_val = tick_size.split(".")[1].find("1") + 1
+                print("rounding_val: " + str(rounding_val))
 
         QUANTITY = round((usdt_balance*(PERCENTAGE/100))/cheapest_price,quantity_precision)
         print("buying QUANTITY for this coin: " + str(QUANTITY))
@@ -188,7 +194,8 @@ def handle_message(message):
 
         placed_orders = 0
         for i in range(0,8):
-            order_amount = round(cheapest_price - i*reduce_val,price_precision)
+            order_amount = round(cheapest_price - i*reduce_val,rounding_val)
+            print(order_amount)
             try:
                 print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT', price=order_amount, timeInForce="GTC", quantity=QUANTITY))
                 placed_orders +=1

@@ -27,20 +27,65 @@ client = Client(api_key, api_secret)
 # print(client.futures_change_leverage(symbol="BTCUSDT", leverage=20))
 # print(client.futures_create_order(symbol="BTCUSDT", side='BUY', type='MARKET', quantity=0.001))
 
+# SYMBOL = "BNBUSDT"
+# order_amount=511.2561231
+# QUANTITY=0.1
+# print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT', price=order_amount, timeInForce="GTC", quantity=QUANTITY))
+
+info = client.futures_exchange_info()
+
+SYMBOL = "BNBUSDT"
+# SYMBOL = "OCEANUSDT"
+SYMBOL = "RUNEUSDT"
+SYMBOL = "FTMUSDT"
+SYMBOL = "MKRUSDT"
+SYMBOL = "BTCUSDT"
+# for sym in info["symbols"]:
+#     if(sym["symbol"]==SYMBOL):
+#         val = sym["filters"][0]
+#         print(val)
+#         price_precision = int(sym["pricePrecision"])
+#         print(price_precision)
 
 
-print(client.futures_mark_price(symbol=SYMBOL))
+info = client.futures_exchange_info()
+for symbol in info["symbols"]:
+    if (symbol["symbol"] == SYMBOL):
+        quantity_precision = int(symbol["quantityPrecision"])
+        print("quantity_precision: " + str(quantity_precision))
+        price_precision = int(symbol["pricePrecision"])
+        print("price_precision: "+str(price_precision))
 
-cheapest_price = float(client.futures_mark_price(symbol=SYMBOL)["markPrice"])
-print("cheapest_price: "+str(cheapest_price))
+        print(symbol["filters"][0])
 
-usdt_balance = 0
-for asset in client.futures_account()["assets"]:
-    if(asset["asset"]=="USDT"):
-        usdt_balance = asset["availableBalance"]
-print("usdt_balance: "+usdt_balance)
+        tick_size = float(symbol["filters"][0]["tickSize"])
 
-print(client.futures_account_balance())
+        tick_size = f"{tick_size:.10f}"
+        print("tick_size: "+str(tick_size))
+
+        # rounding_val = str(int(1/tick_size)).count("0")
+
+        rounding_val =tick_size.split(".")[1].find("1")+1
+
+        print("rounding_val: " + str(rounding_val))
+
+
+
+
+
+
+# print(client.futures_mark_price(symbol=SYMBOL))
+#
+# cheapest_price = float(client.futures_mark_price(symbol=SYMBOL)["markPrice"])
+# print("cheapest_price: "+str(cheapest_price))
+#
+# usdt_balance = 0
+# for asset in client.futures_account()["assets"]:
+#     if(asset["asset"]=="USDT"):
+#         usdt_balance = asset["availableBalance"]
+# print("usdt_balance: "+usdt_balance)
+#
+# print(client.futures_account_balance())
 
 # print(client.futures_ticker(symbol=SYMBOL))
 # print(client.get_ticker(symbol=SYMBOL))
