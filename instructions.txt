@@ -1,3 +1,15 @@
+new credentials for other two bots
+----------------------------------
+
+name of the account: Madrid
+API KYS: I1N4UtJI8fdUDUkTdR5qaRn0e28dDMsofMxwsj3VDBjBBSNNFFiODZFXjFhGLqHU
+Secret key: dwLSqgzBFbeQ9WEyvxEaL0Iy2KrEFYE1p7IlF2l5Oak0G54OGQeOFdtHY3zWn97y
+
+name of the account: Bali
+API KYS:  F6AuqrTBjSEpabDsGrmOxCmMsIDIYWgZDBgFLYL6AAb7TAlSHPeczrUOU36x5pJ2
+secret key: Z8TC2kCNuwIaWFumgFII4KngXtWgjdDT8omr01hmLGxr1K0WoFUJQ9p0pKl2o73B
+
+
 telegram_bot
 ------------
 

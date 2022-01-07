@@ -10,7 +10,7 @@ telegram_api_key = "5047585678:AAFkIdh39y4Sya8IylYExlEfzLM2WChj1sg"
 client = Client(binance_api_key, binance_api_secret)
 
 bot =telebot.TeleBot(telegram_api_key)
-PERCENTAGE = 50
+PERCENTAGE = 1
 LEVERAGE = 10
 
 def check_for_target(thread_data):
@@ -190,10 +190,10 @@ def handle_message(message):
             return
 
         # creating 8 orders
-        reduce_val = (cheapest_price-msg_entry_min)/8
+        reduce_val = (cheapest_price-msg_entry_min)/16
 
         placed_orders = 0
-        for i in range(0,8):
+        for i in range(0,16):
             order_amount = round(cheapest_price - i*reduce_val,rounding_val)
             print(order_amount)
             try:

@@ -5,8 +5,19 @@ from binance.client import Client
 # api_key = 'yZhdQLPZCcr13m8zBadCv6tK9EsAJiLF9u9hzOMhAnEBDYasKDYxXzxbFHFtStjp'
 # api_secret = 'Pdbl4mwl7xZhZr95QEzihNevg1J5USRlWuHVnwb6To2h1soEgNXrJ8TFteM45KEP'
 
-api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
-api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
+# #bot 0
+# api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
+# api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
+
+# #bot 1
+# api_key = 'I1N4UtJI8fdUDUkTdR5qaRn0e28dDMsofMxwsj3VDBjBBSNNFFiODZFXjFhGLqHU'
+# api_secret = 'dwLSqgzBFbeQ9WEyvxEaL0Iy2KrEFYE1p7IlF2l5Oak0G54OGQeOFdtHY3zWn97y'
+
+#bot 2
+api_key = 'F6AuqrTBjSEpabDsGrmOxCmMsIDIYWgZDBgFLYL6AAb7TAlSHPeczrUOU36x5pJ2'
+api_secret = 'Z8TC2kCNuwIaWFumgFII4KngXtWgjdDT8omr01hmLGxr1K0WoFUJQ9p0pKl2o73B'
+
+
 LEVERAGE = 10
 SYMBOL = "OCEANUSDT"
 PERCENTAGE = 1
@@ -32,7 +43,8 @@ client = Client(api_key, api_secret)
 # QUANTITY=0.1
 # print(client.futures_create_order(symbol=SYMBOL, side='BUY', type='LIMIT', price=order_amount, timeInForce="GTC", quantity=QUANTITY))
 
-info = client.futures_exchange_info()
+# info = client.futures_exchange_info()
+# print(info)
 
 SYMBOL = "BNBUSDT"
 # SYMBOL = "OCEANUSDT"
@@ -48,26 +60,26 @@ SYMBOL = "BTCUSDT"
 #         print(price_precision)
 
 
-info = client.futures_exchange_info()
-for symbol in info["symbols"]:
-    if (symbol["symbol"] == SYMBOL):
-        quantity_precision = int(symbol["quantityPrecision"])
-        print("quantity_precision: " + str(quantity_precision))
-        price_precision = int(symbol["pricePrecision"])
-        print("price_precision: "+str(price_precision))
-
-        print(symbol["filters"][0])
-
-        tick_size = float(symbol["filters"][0]["tickSize"])
-
-        tick_size = f"{tick_size:.10f}"
-        print("tick_size: "+str(tick_size))
-
-        # rounding_val = str(int(1/tick_size)).count("0")
-
-        rounding_val =tick_size.split(".")[1].find("1")+1
-
-        print("rounding_val: " + str(rounding_val))
+# info = client.futures_exchange_info()
+# for symbol in info["symbols"]:
+#     if (symbol["symbol"] == SYMBOL):
+#         quantity_precision = int(symbol["quantityPrecision"])
+#         print("quantity_precision: " + str(quantity_precision))
+#         price_precision = int(symbol["pricePrecision"])
+#         print("price_precision: "+str(price_precision))
+#
+#         print(symbol["filters"][0])
+#
+#         tick_size = float(symbol["filters"][0]["tickSize"])
+#
+#         tick_size = f"{tick_size:.10f}"
+#         print("tick_size: "+str(tick_size))
+#
+#         # rounding_val = str(int(1/tick_size)).count("0")
+#
+#         rounding_val =tick_size.split(".")[1].find("1")+1
+#
+#         print("rounding_val: " + str(rounding_val))
 
 
 
@@ -79,11 +91,11 @@ for symbol in info["symbols"]:
 # cheapest_price = float(client.futures_mark_price(symbol=SYMBOL)["markPrice"])
 # print("cheapest_price: "+str(cheapest_price))
 #
-# usdt_balance = 0
-# for asset in client.futures_account()["assets"]:
-#     if(asset["asset"]=="USDT"):
-#         usdt_balance = asset["availableBalance"]
-# print("usdt_balance: "+usdt_balance)
+usdt_balance = 0
+for asset in client.futures_account()["assets"]:
+    if(asset["asset"]=="USDT"):
+        usdt_balance = asset["availableBalance"]
+print("usdt_balance: "+usdt_balance)
 #
 # print(client.futures_account_balance())
 
