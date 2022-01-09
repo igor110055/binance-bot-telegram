@@ -1,20 +1,37 @@
 new credentials for other two bots
 ----------------------------------
 
-name of the account: Madrid
-API KYS: I1N4UtJI8fdUDUkTdR5qaRn0e28dDMsofMxwsj3VDBjBBSNNFFiODZFXjFhGLqHU
-Secret key: dwLSqgzBFbeQ9WEyvxEaL0Iy2KrEFYE1p7IlF2l5Oak0G54OGQeOFdtHY3zWn97y
+#bot0
+# binance_api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
+# binance_api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
+# telegram_api_key = "5047585678:AAFkIdh39y4Sya8IylYExlEfzLM2WChj1sg"
 
-name of the account: Bali
-API KYS:  F6AuqrTBjSEpabDsGrmOxCmMsIDIYWgZDBgFLYL6AAb7TAlSHPeczrUOU36x5pJ2
-secret key: Z8TC2kCNuwIaWFumgFII4KngXtWgjdDT8omr01hmLGxr1K0WoFUJQ9p0pKl2o73B
+#bot1 - madrid
+binance_api_key = 'Mm7ai1Sri20YjysrLm5DpzP3AHFIt80edsxzMvtZjrsfstlqqTtzADIlH1Qynmmm'
+binance_api_secret = 'Qp6pJKzPmq2LtTpk5rE3xE0y3xQX4UuIA6ira6hMhsyRmslV7eI9GgDscEQ3Hohn'
+telegram_api_key = "5065993300:AAFzp5-c4-TaD0MVYnNYsdP59BjO-Yqo5KY"
 
+#bot2 - bali
+binance_api_key = 'zXx32EFAKAIwoVl45DopUqF6TYsTAqN7rzEq78gbc75pWO9mT9Kl4K7L7YVHAzUR'
+binance_api_secret = 'gbwJG2E8zz01eui9orYw3ntTlv1dKf8fSMCGYfqSCiL3gPyuh6hwEi3cVASSFimf'
+telegram_api_key = "5041025310:AAHtDa9p8EfAYUfoqmfmQsaZH5BUsrzJGts"
 
 telegram_bot
 ------------
 
+bot1
 auto_bot_jonam_2022_percentage
 jonam_percentage_bot
+
+bot2
+auto_bot_jonam_2022_percentage_madrid
+jonam_percentage_madrid_bot
+
+bot3
+auto_bot_jonam_2022_percentage_bali
+jonam_percentage_bali_bot
+
+----------------------------------------
 
 Done! Congratulations on your new bot. You will find it at t.me/jonam_percentage_bot. You can now add a description, about section and profile picture for your bot, see /help for a list of commands. By the way, when you've finished creating your cool bot, ping our Bot Support if you want a better username for it. Just make sure the bot is fully operational before you do this.
 

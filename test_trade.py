@@ -1,29 +1,37 @@
 from binance.client import Client
 
 
-# #bot 0
-api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
-api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
+#bot 0
+# api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
+# api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
 
-# #bot 1
-# api_key = 'I1N4UtJI8fdUDUkTdR5qaRn0e28dDMsofMxwsj3VDBjBBSNNFFiODZFXjFhGLqHU'
-# api_secret = 'dwLSqgzBFbeQ9WEyvxEaL0Iy2KrEFYE1p7IlF2l5Oak0G54OGQeOFdtHY3zWn97y'
+#bot 1
+api_key = 'Mm7ai1Sri20YjysrLm5DpzP3AHFIt80edsxzMvtZjrsfstlqqTtzADIlH1Qynmmm'
+api_secret = 'Qp6pJKzPmq2LtTpk5rE3xE0y3xQX4UuIA6ira6hMhsyRmslV7eI9GgDscEQ3Hohn'
 
 #bot 2
-# api_key = 'F6AuqrTBjSEpabDsGrmOxCmMsIDIYWgZDBgFLYL6AAb7TAlSHPeczrUOU36x5pJ2'
-# api_secret = 'Z8TC2kCNuwIaWFumgFII4KngXtWgjdDT8omr01hmLGxr1K0WoFUJQ9p0pKl2o73B'
+# api_key = 'zXx32EFAKAIwoVl45DopUqF6TYsTAqN7rzEq78gbc75pWO9mT9Kl4K7L7YVHAzUR'
+# api_secret = 'gbwJG2E8zz01eui9orYw3ntTlv1dKf8fSMCGYfqSCiL3gPyuh6hwEi3cVASSFimf'
 
-LEVERAGE = 10
-SYMBOL = "OCEANUSDT"
-PERCENTAGE = 1
+client = Client(api_key, api_secret)
+
+usdt_balance = 0
+for asset in client.futures_account()["assets"]:
+    if(asset["asset"]=="USDT"):
+        usdt_balance = asset["availableBalance"]
+print("usdt_balance: "+usdt_balance)
+
+
+
+
+# LEVERAGE = 10
+# SYMBOL = "OCEANUSDT"
+# PERCENTAGE = 1
 
 # #testnet
 # api_key = "KZexYHU1F0a0tfcw9lpDWqSLnz1T3O9Idr4xUmw20oWG7u8HW9yBszL5ELFf0Z2h"
 # api_secret = "HqeRs5Qs4YLFJSW8DXX7i9hPJnDGIcg0DWS0JdCJApalIw9Raz45ToaQGCPh1YY9"
 
-
-
-client = Client(api_key, api_secret)
 
 # print(client.futures_coin_create_order("BTCUSDT"))
 
@@ -41,12 +49,12 @@ client = Client(api_key, api_secret)
 # info = client.futures_exchange_info()
 # print(info)
 
-SYMBOL = "BNBUSDT"
+# SYMBOL = "BNBUSDT"
 # SYMBOL = "OCEANUSDT"
-SYMBOL = "RUNEUSDT"
-SYMBOL = "FTMUSDT"
-SYMBOL = "MKRUSDT"
-SYMBOL = "BTCUSDT"
+# SYMBOL = "RUNEUSDT"
+# SYMBOL = "FTMUSDT"
+# SYMBOL = "MKRUSDT"
+# SYMBOL = "BTCUSDT"
 # for sym in info["symbols"]:
 #     if(sym["symbol"]==SYMBOL):
 #         val = sym["filters"][0]
@@ -85,12 +93,7 @@ SYMBOL = "BTCUSDT"
 #
 # cheapest_price = float(client.futures_mark_price(symbol=SYMBOL)["markPrice"])
 # print("cheapest_price: "+str(cheapest_price))
-#
-usdt_balance = 0
-for asset in client.futures_account()["assets"]:
-    if(asset["asset"]=="USDT"):
-        usdt_balance = asset["availableBalance"]
-print("usdt_balance: "+usdt_balance)
+
 #
 # print(client.futures_account_balance())
 

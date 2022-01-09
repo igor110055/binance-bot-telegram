@@ -3,9 +3,20 @@ from binance.client import Client # pip install python-binance
 import time
 from threading import Thread
 
-binance_api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
-binance_api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
-telegram_api_key = "5047585678:AAFkIdh39y4Sya8IylYExlEfzLM2WChj1sg"
+#bot0
+# binance_api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
+# binance_api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
+# telegram_api_key = "5047585678:AAFkIdh39y4Sya8IylYExlEfzLM2WChj1sg"
+
+#bot1
+binance_api_key = 'Mm7ai1Sri20YjysrLm5DpzP3AHFIt80edsxzMvtZjrsfstlqqTtzADIlH1Qynmmm'
+binance_api_secret = 'Qp6pJKzPmq2LtTpk5rE3xE0y3xQX4UuIA6ira6hMhsyRmslV7eI9GgDscEQ3Hohn'
+telegram_api_key = "5065993300:AAFzp5-c4-TaD0MVYnNYsdP59BjO-Yqo5KY"
+
+#bot2
+# binance_api_key = 'zXx32EFAKAIwoVl45DopUqF6TYsTAqN7rzEq78gbc75pWO9mT9Kl4K7L7YVHAzUR'
+# binance_api_secret = 'gbwJG2E8zz01eui9orYw3ntTlv1dKf8fSMCGYfqSCiL3gPyuh6hwEi3cVASSFimf'
+# telegram_api_key = "5041025310:AAHtDa9p8EfAYUfoqmfmQsaZH5BUsrzJGts"
 
 client = Client(binance_api_key, binance_api_secret)
 
@@ -32,23 +43,6 @@ def check_for_target(thread_data):
                     print(error_msg)
                     bot.reply_to(msg, error_msg)
                 break
-            #     try:
-            #         print(client.futures_create_order(symbol=symb, side='SELL', type='TAKE_PROFIT_MARKET',stopPrice=target, closePosition=True))
-            #     except Exception as e:
-            #         error_msg = "issue in creating order for take profit, after reaching target 1 -> " + str(e)
-            #         print(error_msg)
-            #         bot.reply_to(msg, error_msg)
-            #     break
-            # elif(price_now<stoploss):
-            #     bot.reply_to(msg, "target achieved")
-            #     print("target achieved for " + symb)
-            #     try:
-            #         print(client.futures_create_order(symbol=symb, side='SELL', type='STOP_MARKET',stopPrice=stoploss, closePosition=True))
-            #     except Exception as e:
-            #         error_msg = "issue in creating order for stoploss, after reaching stoploss price -> " + str(e)
-            #         print(error_msg)
-            #         bot.reply_to(msg, error_msg)
-            #     break
             if (price_now < stoploss):
                 break
             else:
