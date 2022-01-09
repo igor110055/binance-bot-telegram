@@ -1,22 +1,17 @@
 from binance.client import Client
 
 
-#keys for oraginal account
-# api_key = 'yZhdQLPZCcr13m8zBadCv6tK9EsAJiLF9u9hzOMhAnEBDYasKDYxXzxbFHFtStjp'
-# api_secret = 'Pdbl4mwl7xZhZr95QEzihNevg1J5USRlWuHVnwb6To2h1soEgNXrJ8TFteM45KEP'
-
 # #bot 0
-# api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
-# api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
+api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
+api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
 
 # #bot 1
 # api_key = 'I1N4UtJI8fdUDUkTdR5qaRn0e28dDMsofMxwsj3VDBjBBSNNFFiODZFXjFhGLqHU'
 # api_secret = 'dwLSqgzBFbeQ9WEyvxEaL0Iy2KrEFYE1p7IlF2l5Oak0G54OGQeOFdtHY3zWn97y'
 
 #bot 2
-api_key = 'F6AuqrTBjSEpabDsGrmOxCmMsIDIYWgZDBgFLYL6AAb7TAlSHPeczrUOU36x5pJ2'
-api_secret = 'Z8TC2kCNuwIaWFumgFII4KngXtWgjdDT8omr01hmLGxr1K0WoFUJQ9p0pKl2o73B'
-
+# api_key = 'F6AuqrTBjSEpabDsGrmOxCmMsIDIYWgZDBgFLYL6AAb7TAlSHPeczrUOU36x5pJ2'
+# api_secret = 'Z8TC2kCNuwIaWFumgFII4KngXtWgjdDT8omr01hmLGxr1K0WoFUJQ9p0pKl2o73B'
 
 LEVERAGE = 10
 SYMBOL = "OCEANUSDT"
