@@ -4,14 +4,14 @@ import time
 from threading import Thread
 
 #bot0
-# binance_api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
-# binance_api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
-# telegram_api_key = "5047585678:AAFkIdh39y4Sya8IylYExlEfzLM2WChj1sg"
+binance_api_key = 'wFqCyHdnaygcjy4W4refvi6Jo4qdlLb0OUOIeWjcCUZ5F53s7DM05ShS7Kzv9YM7'
+binance_api_secret = '4gmQwHlieQwQGHuHdsN7KILZWCxQdLXutTaOCjy7wwOi7QddRVebNueaEpeSETIj'
+telegram_api_key = "5047585678:AAFkIdh39y4Sya8IylYExlEfzLM2WChj1sg"
 
 #bot1
-binance_api_key = 'Mm7ai1Sri20YjysrLm5DpzP3AHFIt80edsxzMvtZjrsfstlqqTtzADIlH1Qynmmm'
-binance_api_secret = 'Qp6pJKzPmq2LtTpk5rE3xE0y3xQX4UuIA6ira6hMhsyRmslV7eI9GgDscEQ3Hohn'
-telegram_api_key = "5065993300:AAFzp5-c4-TaD0MVYnNYsdP59BjO-Yqo5KY"
+# binance_api_key = 'Mm7ai1Sri20YjysrLm5DpzP3AHFIt80edsxzMvtZjrsfstlqqTtzADIlH1Qynmmm'
+# binance_api_secret = 'Qp6pJKzPmq2LtTpk5rE3xE0y3xQX4UuIA6ira6hMhsyRmslV7eI9GgDscEQ3Hohn'
+# telegram_api_key = "5065993300:AAFzp5-c4-TaD0MVYnNYsdP59BjO-Yqo5KY"
 
 #bot2
 # binance_api_key = 'zXx32EFAKAIwoVl45DopUqF6TYsTAqN7rzEq78gbc75pWO9mT9Kl4K7L7YVHAzUR'
@@ -23,6 +23,30 @@ client = Client(binance_api_key, binance_api_secret)
 bot =telebot.TeleBot(telegram_api_key)
 PERCENTAGE = 1
 LEVERAGE = 10
+TAKE_PROFIT = "t1"
+
+@bot.message_handler(commands=["check-take-profit"])
+def check_take_profit(message):
+    print(TAKE_PROFIT)
+    bot.reply_to(message, str(TAKE_PROFIT))
+
+@bot.message_handler(commands=["set-take-profit"])
+def set_take_profit(message):
+    try:
+        print(message.text)
+        global TAKE_PROFIT
+        val = message.text.split(" ")[1].strip().lower()
+        if(val=="t1" or "%" in val):
+            TAKE_PROFIT = val
+            bot.reply_to(message, "TAKE_PROFIT value change to: " + str(TAKE_PROFIT))
+        else:
+            error_msg = "take profit value should be in these formats, ex: t1, 2%, 3.5%"
+            print(error_msg)
+            bot.reply_to(message, error_msg)
+
+    except Exception as e:
+        print("Wrong format -> " + str(e))
+        bot.reply_to(message, "Wrong format -> " + str(e))
 
 def check_for_target(thread_data):
     try:
@@ -34,8 +58,8 @@ def check_for_target(thread_data):
             price_now = float(client.futures_mark_price(symbol=symb)["markPrice"])
             print("price_now for "+symb+": " + str(price_now))
             if(price_now>target):
-                bot.reply_to(msg, "price reached target 1")
-                print("price reached target 1 for "+symb)
+                bot.reply_to(msg, "price reached target")
+                print("price reached target for "+symb)
                 try:
                     print(client.futures_cancel_all_open_orders(symbol=symb))
                 except Exception as e:
@@ -43,7 +67,9 @@ def check_for_target(thread_data):
                     print(error_msg)
                     bot.reply_to(msg, error_msg)
                 break
-            if (price_now < stoploss):
+            elif (price_now < stoploss):
+                bot.reply_to(msg, "price reached stoploss")
+                print("price reached stoploss for " + symb)
                 break
             else:
                 print("target/stoploss not achieved yet")
@@ -80,12 +106,12 @@ def balance(message):
 #     bot.send_message(message.chat.id, "Bot started")
 
 @bot.message_handler(commands=["get-percentage"])
-def test(message):
+def get_percentage(message):
     print(PERCENTAGE)
     bot.reply_to(message, str(PERCENTAGE))
 
 @bot.message_handler(commands=["set-percentage"])
-def book(message):
+def set_percentage(message):
     try:
         print(message.text)
         global PERCENTAGE
@@ -203,7 +229,15 @@ def handle_message(message):
 
         # creating take profit order
         try:
-            print(client.futures_create_order(symbol=SYMBOL, side='SELL', type='TAKE_PROFIT_MARKET', stopPrice=msg_target, closePosition=True))
+            global TAKE_PROFIT
+            if(TAKE_PROFIT=="t1"):
+                stop_price = msg_target
+            else:
+                stop_price = round(((float(TAKE_PROFIT[:-1])/100)+1)*cheapest_price,rounding_val)
+            print("stop_price: "+str(stop_price))
+            print(client.futures_create_order(symbol=SYMBOL, side='SELL', type='TAKE_PROFIT_MARKET', stopPrice=stop_price, closePosition=True))
+            bot.reply_to(message, "Created take profit order at: "+str(stop_price))
+
         except Exception as e:
             error_msg = "issue in creating order for take profit -> " + str(e)
             print(error_msg)
@@ -212,13 +246,14 @@ def handle_message(message):
         # creating order for stoploss
         try:
             print(client.futures_create_order(symbol=SYMBOL, side='SELL', type='STOP_MARKET', stopPrice=msg_stoploss,closePosition=True))
+            bot.reply_to(message, "Created stoploss order at: " + str(msg_stoploss))
         except Exception as e:
             error_msg = "issue in creating order for stoploss -> " + str(e)
             print(error_msg)
             bot.reply_to(message, error_msg)
 
         # target checking thread
-        t = Thread(target=check_for_target, args=([SYMBOL,msg_target,msg_stoploss,message],), )
+        t = Thread(target=check_for_target, args=([SYMBOL,stop_price,msg_stoploss,message],), )
         t.start()
 
     except Exception as e:
